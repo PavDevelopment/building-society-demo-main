@@ -1,0 +1,31 @@
+<mat-form-field class="example-chip-list" *ngIf="building?.nicknames?.length > 0">
+  <mat-chip-list #chipList aria-label="Nicknames selection">
+    <mat-chip *ngFor="let nick of building.nicknames" [selectable]="selectable" [removable]="removable" (removed)="removeNickname(nick)">
+      {{nick}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <form [formGroup]="buildingNicknameForm">
+      <input
+        formControlName="nickname"
+        placeholder="Press ENTER or COMMA to add new nickname"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="addNickname($event)"
+      />
+      <div class="validation-errors">
+        <p *ngIf="(nickname.statusChanges | async) === 'PENDING'">
+          Awaiting async validation <mat-spinner diameter="25" style="position: absolute; left: 105%; top: -15%;"></mat-spinner>
+        </p>
+        <p class="error-message" *ngIf="nickname.invalid && nickname.hasError('required') && (nickname.dirty || nickname.touched)">
+          Nickname is required
+        </p>
+        <p class="error-message" *ngIf="nickname.invalid && nickname.hasError('invalidNickname') && (nickname.dirty || nickname.touched)">
+          nickname is in invalid format
+        </p>
+        <p class="success-message" *ngIf="nickname.valid && nickname.value !== '' && (nickname.dirty || nickname.touched)">
+          Valid nickname feel free to add it
+        </p>
+      </div>
+    </form>
+  </mat-chip-list>
+</mat-form-field>

@@ -1,0 +1,25 @@
+.validation-errors {
+  position: absolute;
+  margin-top: 10px;
+}
+
+input.mat-chip-input {
+  height: 30px;
+  margin: 5px;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  width: 240px;
+}
+
+:host ::ng-deep .mat-chip-list-wrapper {
+  width: 180px;
+}
+
+.success-message {
+    color: green;
+}
+
+.error-message {
+    color: red;
+}

@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <span>SwissRe Application</span>
+</mat-toolbar>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" class="loader"></mat-progress-bar>
+</ng-template>
+<div class="container" *ngIf="buildings$ | async as buildings; else loading">
+  <app-building-list class="building-list" [buildings]="buildings"></app-building-list>
+</div>

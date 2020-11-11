@@ -1,0 +1,50 @@
+<div class="building-list-container">
+  <p *ngIf="buildings.length === 0" class="no-buildings">There are no buildings to show</p>
+  <div *ngIf="buildings.length > 0" class="building-list">
+    <div *ngFor="let building of buildings; index as i">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{building.address}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="{{building.imageUrl}}" />
+        <mat-card-content *ngIf="!isNicknamesEditorModeEnabled" class="building-content">
+          <p>
+            {{building.description}}
+          </p>
+          <h3><b>Current building nicknames:</b></h3>
+          <mat-chip-list>
+            <mat-chip *ngFor="let nick of building.nicknames">
+              {{nick}}
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            class="open-nicknames-editor-button"
+            *ngIf="!isNicknamesEditorModeEnabled"
+            (click)="enableNicknamesEditorModeClick(building)"
+          >
+            OPEN NICKNAMES EDITOR
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="close-nicknames-editor-button"
+            [disabled]="formStatus === 'PENDING'"
+            *ngIf="isNicknamesEditorModeEnabled"
+            (click)="enableNicknamesEditorModeClick(building)"
+          >
+            CLOSE NICKNAMES EDITOR
+          </button>
+        </mat-card-actions>
+        <app-building-nickname-editor
+          [building]="editedBuilding"
+          (formStatus)="handleFormStatusChange($event)"
+        ></app-building-nickname-editor>
+      </mat-card>
+    </div>
+  </div>
+</div>
